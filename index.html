@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Qui est Benoit Poux ?</title>
+  <style type="text/css">
+     body {
+       position: relative;
+       background-image: url('fond.jpg');
+       background-size: cover;
+     }
+     #contenu-nom,#contenu-metier {
+      position: absolute;
+      top: -1000px;
+      text-align: center;
+      margin: 0;
+     }
+     #nom,#metier {
+      position: absolute;
+      color: white;
+      z-index: 10;
+      margin: 0;
+     }
+     #nom {
+      top: -8px;
+      left: -8px;
+     }
+     #nom-ombre{
+      top: 0px;
+      left: 0px;
+     }
+     .ombre {
+      position: absolute;
+      color: black;
+      z-index: 5;
+      margin: 0;
+     }
+     #metier {
+      top: -8px;
+      left: -8px;
+     }
+     #metier-ombre{
+      top: 0px;
+      left: 0px;
+     }
+     h1 {
+      font-size: 10em;
+     }
+     h2 {
+      font-size: 8em;
+     }
+  </style>
+</head>
+
+<body>
+  <section id="first-section">
+    <div id="contenu-nom" class="contenu-titre">
+      <h1 id="nom">Benoît&nbsp;Poux</h1>
+      <h1 id="nom-ombre" class="ombre">Benoît&nbsp;Poux</h1>
+    </div>
+    <div id="contenu-metier" class="contenu-titre">
+      <h2 id="metier">Développeur&nbsp;Web</h2>
+      <h2 id="metier-ombre" class="ombre">Développeur&nbsp;Web</h2>
+    </div>
+  </section>
+
+  <script src="jquery.js"></script>
+  <script src="jquery-ui.min.js"></script> 
+  <script>
+    $(function() {
+      // definition des dimensions
+      var positionDivNom = $('#contenu-nom').offset();
+      var positionDivMetier = $('#contenu-metier').offset();
+      var largeurEcran = ($(window).width());
+      var hauteurEcran = ($(window).height());
+
+      // placement des div selon dimension ecran
+      positionDivNom.top = -($('#nom').height());
+      positionDivNom.left = (largeurEcran - $('#nom').width()) / 2;
+      $('#contenu-nom').offset(positionDivNom);
+      positionDivMetier.top = -($('#metier').height());
+      positionDivMetier.left = (largeurEcran - $('#metier').width()) / 2;
+      $('#contenu-metier').offset(positionDivMetier);
+
+      // calcul de la destination des div suite a l'animation
+      var positionFinaleDivNom = (hauteurEcran / 2) - $('#nom').height() - 10;
+      var positionFinaleDivMetier = positionFinaleDivNom + $('#metier').height() + 10;
+
+      // animation
+      /*$('#contenu-nom').animate({top:positionFinaleDivNom}, 1500, 'easeOutBounce', function(){
+        $('#contenu-metier').animate({top:positionFinaleDivMetier}, 3000, 'easeOutBounce').delay(1000).hide('pulsate', 100);
+      }).delay(4050).hide('pulsate', 120);*/
+      $('#contenu-nom').animate({top:positionFinaleDivNom}, 1500, 'easeOutBounce', function(){
+        $('#contenu-metier').animate({top:positionFinaleDivMetier}, 1500, 'easeOutBounce', function(){
+          $('#contenu-nom, #contenu-metier').delay(1000).hide('pulsate', 120);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
